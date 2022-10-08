@@ -14,14 +14,15 @@ public class Main {
         SubTask subTask1 = new SubTask("SubTask1", "description", Status.NEW, 1);
         SubTask subTask2 = new SubTask("SubTask2", "description", Status.DONE, 1);
 
-        manager.add(task);
-        manager.add(epic);
-        manager.add(subTask);
-        manager.add(subTask1);
-        manager.add(subTask2);
+        manager.addTask(task);
+        manager.addEpic(epic);
+        manager.addSubTask(subTask);
+        manager.addSubTask(subTask1);
+        manager.addSubTask(subTask2);
         manager.getSubTasksFromEpic(1);
         manager.deleteTasks();
-        manager.deleteSubTask(3);
+        manager.deleteEpics();
+        manager.deleteSubTasks();
         manager.deleteEpic(1);
         System.out.println("Поехали!");
     }

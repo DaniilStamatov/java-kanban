@@ -31,9 +31,18 @@ public class TaskManager {
     }
 
     public void deleteSubTasks(){
+        for(Epic epic:epics.values()){
+            epic.getSubTasksIds().clear();
+            updateEpicStatus(epic);
+        }
         subTasks.clear();
+
     }
     public void deleteEpics(){
+        for(Epic epic:epics.values()){
+            epic.getSubTasksIds().clear();
+            deleteSubTasks();
+        }
         epics.clear();
     }
 
@@ -64,6 +73,7 @@ public class TaskManager {
     public void updateEpic(Epic epic){
         if(epics.containsKey(epic.getId())){
             epics.put(epic.getId(), epic);
+            updateEpicStatus(epic);
         }
     }
 
@@ -94,18 +104,18 @@ public class TaskManager {
 
 
     public ArrayList<SubTask> getSubTasksFromEpic(int epicId){
-        if(epics.containsKey(epicId)){
+        ArrayList<SubTask> subTasksFromEpic = new ArrayList<>();
 
-        }
-        Epic epic = epics.get(epicId);
-        ArrayList<SubTask> subTaskFromEpic= new ArrayList<>();
-        ArrayList<Integer> subTaskIds =  epic.getSubTasksIds();
-        for (int i = 0; i < subTaskIds.size(); i++) {
-            if(subTasks.containsKey(subTaskIds.get(i))){
-                subTaskFromEpic.add(subTasks.get(subTaskIds.get(i)));
+        if(epics.containsKey(epicId)) {
+            Epic epic = epics.get(epicId);
+            ArrayList<Integer> subTaskIds = epic.getSubTasksIds();
+            for (int i = 0; i < subTaskIds.size(); i++) {
+                if (subTasks.containsKey(subTaskIds.get(i))) {
+                    subTasksFromEpic.add(subTasks.get(subTaskIds.get(i)));
+                }
             }
         }
-        return subTaskFromEpic;
+        return subTasksFromEpic;
     }
 
 
@@ -133,13 +143,13 @@ public class TaskManager {
         epic.setStatus(status);
     }
 
-    public void add(Task task){
+    public void addTask(Task task){
         task.setId(generatorId);
         tasks.put(task.getId(), task);
         generatorId++;
     }
 
-    public void add(SubTask subTask){
+    public void addSubTask(SubTask subTask){
         int epicId = subTask.getEpicId();
         Epic epic = epics.get(epicId);
 
@@ -156,7 +166,7 @@ public class TaskManager {
         generatorId++;
     }
 
-    public  void add(Epic epic){
+    public  void addEpic(Epic epic){
         epic.setId(generatorId);
         epics.put(epic.getId(), epic);
         generatorId++;
