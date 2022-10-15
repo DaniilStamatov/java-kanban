@@ -15,10 +15,4 @@ public class SubTask extends Task {
         super(name, description, status);
         this.epicId = epicId;
     }
-
-
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
 }
