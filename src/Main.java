@@ -1,4 +1,3 @@
-import manager.InMemoryTaskManager;
 import manager.Managers;
 import manager.TaskManager;
 import task.Epic;
@@ -24,19 +23,19 @@ public class Main {
         Epic epic7 = new Epic("Задача большая", "Description", Status.NEW);
         Epic epic8 = new Epic("Задача большая", "Description", Status.NEW);
 
-        manager.addTask(task);
-        manager.addTask(epic);
-        manager.addTask(subTask);
-        manager.addTask(subTask1);
-        manager.addTask(subTask2);
-        manager.addTask(epic1);
-        manager.addTask(epic2);
-        manager.addTask(epic3);
-        manager.addTask(epic4);
-        manager.addTask(epic5);
-        manager.addTask(epic6);
-        manager.addTask(epic7);
-        manager.addTask(epic8);
+        manager.add(task);
+        manager.add(epic);
+        manager.add(subTask);
+        manager.add(subTask1);
+        manager.add(subTask2);
+        manager.add(epic1);
+        manager.add(epic2);
+        manager.add(epic3);
+        manager.add(epic4);
+        manager.add(epic5);
+        manager.add(epic6);
+        manager.add(epic7);
+        manager.add(epic8);
 
         manager.getSubTasksFromEpic(1);
         manager.getTask(0);
