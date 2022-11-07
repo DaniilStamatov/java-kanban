@@ -37,20 +37,18 @@ class CustomLinkedList{
     private Node<Task> head;
     private Node<Task> tail;
 
-    private final HashMap<Integer, Node> nodes = new HashMap<>();
+    private final HashMap<Integer, Node<Task>> nodes = new HashMap<>();
 
     public void linkLast(Task task){
         final Node<Task> oldTail = tail;
         final Node<Task> newTail = new Node<>(task, null, oldTail);
         tail = newTail;
         if(oldTail == null) {
-            tail = newTail;
             head = newTail;
-            nodes.put(task.getId(), newTail);
         }else{
             oldTail.next = newTail;
-            nodes.put(task.getId(), newTail);
         }
+        nodes.put(task.getId(), newTail);
     }
 
 
@@ -67,11 +65,11 @@ class CustomLinkedList{
 
     public List<Task> getTasks(){
         List<Task> tasks = new ArrayList<>();
-        Node<Task> currentNode = this.head;
+        Node<Task> currentNode = head;
         tasks.add(currentNode.data);
-        while(currentNode.next!=null){
-            currentNode = currentNode.next;
+        while(currentNode!=null){
             tasks.add(currentNode.data);
+            currentNode = currentNode.next;
         }
 
         return tasks;
@@ -81,31 +79,34 @@ class CustomLinkedList{
         this.removeNode(nodes.get(value));
         this.nodes.remove(value);
     }
-    public void removeNode(Node node){
+    public void removeNode(Node<Task> node){
         if(node.previous == null){
-            this.head = node.next;
+            head = node.next;
+            if(node.next == null){
+                tail = null;
+                return;
+            }
             node.next.previous = null;
             return;
         }
         node.previous.next = node.next;
 
         if(node == tail){
-            this.tail = node.previous;
+            tail = node.previous;
             return;
         }
 
-        if(node != tail){
-            node.next.previous = node.previous;
-        }
+        node.next.previous = node.previous;
+
     }
-    private Node createNode(Task task){
+    private Node<Task> createNode(Task task){
         Node newNode = new Node(task,null, null);
         nodes.put(task.getId(), newNode);
         return newNode;
     }
 
 
-    public HashMap<Integer, Node> getNodes() {
+    public HashMap<Integer, Node<Task>> getNodes() {
         return nodes;
     }
 }

@@ -27,7 +27,7 @@ public class Main {
         manager.getSubTasksFromEpic(1);
         manager.getTask(0);
         manager.getHistory();
-
+        manager.getTask(0);
         manager.getEpic(1);
         manager.getHistory();
         manager.getEpic(1);
