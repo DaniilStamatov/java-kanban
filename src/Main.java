@@ -35,10 +35,13 @@ public class Main {
         manager.getTask(0);
         manager.getHistory();
         manager.getEpic(1);
-
+        manager.deleteTask(0);
+        manager.getHistory();
+        manager.deleteEpic(1);
         manager.getSubTask(2);
         manager.getHistory();
         manager.getSubTask(4);
+        manager.deleteSubTask(4);
         manager.getSubTask(3);
         manager.getHistory();
 

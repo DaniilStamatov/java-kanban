@@ -28,9 +28,6 @@ public class InMemoryHistoryManager implements HistoryManager{
     public List<Task> getHistory() {
         return history.getTasks();
     }
-
-
-
 }
 
 class CustomLinkedList{
@@ -66,7 +63,6 @@ class CustomLinkedList{
     public List<Task> getTasks(){
         List<Task> tasks = new ArrayList<>();
         Node<Task> currentNode = head;
-        tasks.add(currentNode.data);
         while(currentNode!=null){
             tasks.add(currentNode.data);
             currentNode = currentNode.next;

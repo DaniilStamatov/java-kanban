@@ -63,20 +63,30 @@ public class InMemoryTaskManager implements  TaskManager {
     @Override
     public  Task getTask(int id){
        var task = tasks.get(id);
-       defaultHistory.add(task);
+        if(task!=null){
+            defaultHistory.add(task);
+        }
+
         return task;
     }
 
     @Override
     public  SubTask getSubTask(int id){
-        defaultHistory.add(subTasks.get(id));
-
+       var subTask  = subTasks.get(id);
+       if(subTask!=null){
+           defaultHistory.add(subTasks.get(id));
+       }
         return subTasks.get(id);
     }
 
    @Override
    public Epic getEpic(int id){
-       defaultHistory.add(epics.get(id));
+       var task = epics.get(id);
+
+       if(task!=null){
+           defaultHistory.add(epics.get(id));
+       }
+
        return epics.get(id);
     }
 
@@ -105,8 +115,8 @@ public class InMemoryTaskManager implements  TaskManager {
    @Override
    public void deleteTask(int id) {
        if (tasks.containsKey(id)) {
-           tasks.remove(id);
            defaultHistory.remove(id);
+           tasks.remove(id);
        }
    }
 
@@ -114,8 +124,8 @@ public class InMemoryTaskManager implements  TaskManager {
    public void deleteSubTask(int id){
         if(subTasks.containsKey(id)){
             Epic epic = epics.get(subTasks.get(id).getEpicId());
-            subTasks.remove(id);
             defaultHistory.remove(id);
+            subTasks.remove(id);
             epic.getSubTasksIds().remove((Integer) id);
             updateEpicStatus(epic);
         }
@@ -125,11 +135,16 @@ public class InMemoryTaskManager implements  TaskManager {
    public void deleteEpic(int id){
         if(epics.containsKey(id)){
             for(SubTask task: getSubTasksFromEpic(id)){
+                var history = defaultHistory.getHistory();
+                if(history.contains(task)){
+                    System.out.println("true");
+                    defaultHistory.remove(task.getId());
+                }
+
                 subTasks.remove(task.getId());
-                defaultHistory.remove(task.getId());
             }
-            epics.remove(id);
             defaultHistory.remove(id);
+            epics.remove(id);
         }
     }
 
