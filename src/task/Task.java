@@ -3,10 +3,11 @@ package task;
 import java.util.Objects;
 
 public class Task {
-    private String name;
-    private String description;
-    private Status status;
-    private int id;
+    protected String name;
+    protected String description;
+    protected Status status;
+    protected int id;
+
 
     public Task(String name, String description, Status status) {
         this.name = name;
@@ -16,6 +17,14 @@ public class Task {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Integer getEpic(){
+        return null;
+    }
+
+    public TaskType getType(){
+        return TaskType.TASK;
     }
 
     public void setDescription(String description) {
@@ -60,15 +69,40 @@ public class Task {
         return Objects.hash(name, description, status, id);
     }
 
+//    @Override
+//    public String toString() {
+//        return "Task{" +
+//                "name='" + name + '\'' +
+//                ", description='" + description + '\'' +
+//                ", status=" + status +
+//                ", id=" + id +
+//                '}';
+//    }
     @Override
-    public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", status=" + status +
-                ", id=" + id +
-                '}';
+    public String toString(){
+        return String.format("%d,%s,%s,%s,%s\n", id, TaskType.TASK, status, name, description);
+    }
+
+    public static Task fromString(String inputString){
+        String[] input = inputString.split(",");
+        switch (input[2]){
+            case ("NEW"):
+                Task task = new Task(input[3], input[4], Status.NEW);
+                task.setId(Integer.parseInt(input[0]));
+                return task;
+            case ("DONE"):
+                task = new Task(input[3], input[4], Status.DONE);
+                task.setId(Integer.parseInt(input[0]));
+                return task;
+            case ("IN_PROGRESS"):
+                 task = new Task(input[3], input[4], Status.IN_PROGRESS);
+                task.setId(Integer.parseInt(input[0]));
+                return task;
+            default:
+                throw  new IllegalArgumentException();
+            }
     }
 }
+
 
 

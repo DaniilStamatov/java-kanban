@@ -4,9 +4,13 @@ import java.util.Objects;
 
 public class SubTask extends Task {
     private int epicId;
-
-    public int getEpicId() {
+    @Override
+    public Integer getEpic() {
         return epicId;
+    }
+    @Override
+    public TaskType getType(){
+        return TaskType.SUBTASK;
     }
 
     public void setEpicId(int epicId) {
@@ -28,7 +32,31 @@ public class SubTask extends Task {
     }
 
     @Override
+    public String toString(){
+        return String.format("%d,%s,%s,%s,%s,%d\n", id, getType(), status, name, description, epicId);
+    }
+    @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), epicId);
+    }
+
+    public static SubTask fromString(String inputString){
+        String[] input = inputString.split(",");
+        switch (input[2]){
+            case ("NEW"):
+                SubTask subTask =  new SubTask(input[3], input[4], Status.NEW, Integer.parseInt(input[5]));
+                subTask.setId(Integer.parseInt(input[0]));
+                return subTask;
+            case ("DONE"):
+                subTask =  new SubTask(input[3], input[4], Status.DONE, Integer.parseInt(input[5]));
+                subTask.setId(Integer.parseInt(input[0]));
+                return subTask;
+            case ("IN_PROGRESS"):
+                subTask =  new SubTask(input[3], input[4], Status.IN_PROGRESS, Integer.parseInt(input[5]));
+                subTask.setId(Integer.parseInt(input[0]));
+                return subTask;
+            default:
+                throw  new IllegalArgumentException();
+        }
     }
 }

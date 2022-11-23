@@ -16,7 +16,6 @@ public class InMemoryHistoryManager implements HistoryManager{
             remove(task.getId());
         }
         history.linkLast(task);
-
     }
 
     @Override
@@ -47,7 +46,6 @@ class CustomLinkedList{
         }
         nodes.put(task.getId(), newTail);
     }
-
 
 
     public void linkFirst(Task task){

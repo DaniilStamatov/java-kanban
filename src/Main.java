@@ -1,61 +1,36 @@
 import manager.Managers;
 import manager.TaskManager;
-import task.Epic;
-import task.Status;
-import task.SubTask;
-import task.Task;
+import task.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager manager = Managers.getDefault();
-        Task task = new Task("Задача", "Description", Status.DONE);
-        Epic epic = new Epic("Задача большая", "Description", Status.NEW);
+        TaskManager loadManager = Managers.loadFromFile();
+        TaskManager saveManager = Managers.getDefaultFileBackedTaskManager();
+        Task task = new Task("Task1", "First task", Status.DONE);
+        Epic epic = new Epic("BigTask", "Description", Status.NEW);
         SubTask subTask = new SubTask("SubTask", "description", Status.DONE, 1);
         SubTask subTask1 = new SubTask("SubTask1", "description", Status.NEW, 1);
         SubTask subTask2 = new SubTask("SubTask2", "description", Status.DONE, 1);
-        Epic epic1 = new Epic("Задача большая", "Description", Status.NEW);
+        Epic epic1 = new Epic("BigTask2", "Description", Status.NEW);
+        Epic epic2 = new Epic("BigTask2", "Description", Status.NEW);
 
 
-        manager.add(task);
-        manager.add(epic);
-        manager.add(subTask);
-        manager.add(subTask1);
-        manager.add(subTask2);
-        manager.add(epic1);
+        saveManager.add(task);
+        saveManager.getTask(0);
+        saveManager.add(epic);
+        saveManager.add(subTask);
+        saveManager.getEpic(1);
+        saveManager.add(subTask1);
+        saveManager.add(subTask2);
+        saveManager.getSubTask(3);
+        saveManager.deleteEpic(epic.getId());
 
-        manager.getSubTasksFromEpic(1);
-        manager.getTask(0);
-        manager.getHistory();
-        manager.getTask(0);
-        manager.getEpic(1);
-        manager.getHistory();
-        manager.getEpic(1);
-        manager.getHistory();
-        manager.getTask(0);
-        manager.getHistory();
-        manager.getEpic(1);
-        manager.deleteTask(0);
-        manager.getHistory();
-        manager.deleteEpic(1);
-        manager.getSubTask(2);
-        manager.getHistory();
-        manager.getSubTask(4);
-        manager.deleteSubTask(4);
-        manager.getSubTask(3);
-        manager.getHistory();
+        saveManager.add(epic1);
+        saveManager.add(epic2);
+        TaskManager loadManager1 = Managers.loadFromFile();
 
-        manager.getSubTask(4);
-        manager.getHistory();
 
-        manager.getTask(0);
-        manager.getSubTask(2);
-        manager.getEpic(1);
-        manager.getHistory();
-        manager.deleteTasks();
-        manager.updateTask(epic);
-        manager.getSubTasksFromEpic(1);
-        manager.deleteEpic(1);
         System.out.println("Поехали!");
     }
 }
