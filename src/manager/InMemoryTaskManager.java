@@ -9,7 +9,6 @@ import task.Task;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class InMemoryTaskManager implements  TaskManager {
     protected HashMap<Integer, Task> tasks = new HashMap<>();
@@ -208,6 +207,14 @@ public class InMemoryTaskManager implements  TaskManager {
 
    @Override
    public void add(SubTask subTask){
+
+        subTask.setId(generatorId);
+        subTasks.put(subTask.getId(), subTask);
+        addSubtaskInEpicWithoutID(subTask);
+        generatorId++;
+   }
+
+    public  void addSubtaskInEpicWithoutID(SubTask subTask){
         int epicId = subTask.getEpic();
         Epic epic = epics.get(epicId);
 
@@ -215,13 +222,8 @@ public class InMemoryTaskManager implements  TaskManager {
             return;
         }
 
-        subTask.setId(generatorId);
-        subTasks.put(subTask.getId(), subTask);
         epic.addSubTaskId(subTask.getId());
-
         updateEpicStatus(epic);
-
-        generatorId++;
     }
 
    @Override

@@ -1,3 +1,4 @@
+import manager.FileBackedTaskManager;
 import manager.Managers;
 import manager.TaskManager;
 import task.*;
@@ -5,8 +6,8 @@ import task.*;
 public class Main {
 
     public static void main(String[] args) {
-        TaskManager loadManager = Managers.loadFromFile();
-        TaskManager saveManager = Managers.getDefaultFileBackedTaskManager();
+        FileBackedTaskManager manager = Managers.loadFromFile();
+        FileBackedTaskManager saveManager = Managers.getDefaultFileBackedTaskManager();
         Task task = new Task("Task1", "First task", Status.DONE);
         Epic epic = new Epic("BigTask", "Description", Status.NEW);
         SubTask subTask = new SubTask("SubTask", "description", Status.DONE, 1);
@@ -14,6 +15,9 @@ public class Main {
         SubTask subTask2 = new SubTask("SubTask2", "description", Status.DONE, 1);
         Epic epic1 = new Epic("BigTask2", "Description", Status.NEW);
         Epic epic2 = new Epic("BigTask2", "Description", Status.NEW);
+        Task task1 = new Task("Task1", "First task", Status.DONE);
+        Task task2 = new Task("Task1", "First task", Status.DONE);
+        Task task3 =  new Task("Task1", "Second task", Status.DONE);
 
 
         saveManager.add(task);
@@ -23,12 +27,15 @@ public class Main {
         saveManager.getEpic(1);
         saveManager.add(subTask1);
         saveManager.add(subTask2);
-        saveManager.getSubTask(3);
-        saveManager.deleteEpic(epic.getId());
 
         saveManager.add(epic1);
         saveManager.add(epic2);
-        TaskManager loadManager1 = Managers.loadFromFile();
+        saveManager.getSubTask(3);
+        saveManager.getEpic(1);
+        saveManager.add(task2);
+        saveManager.add(task1);
+        saveManager.getTask(0);
+        manager.compareLoadAndSaveManagers(saveManager);
 
 
         System.out.println("Поехали!");

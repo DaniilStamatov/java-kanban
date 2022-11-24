@@ -85,22 +85,9 @@ public class Task {
 
     public static Task fromString(String inputString){
         String[] input = inputString.split(",");
-        switch (input[2]){
-            case ("NEW"):
-                Task task = new Task(input[3], input[4], Status.NEW);
-                task.setId(Integer.parseInt(input[0]));
-                return task;
-            case ("DONE"):
-                task = new Task(input[3], input[4], Status.DONE);
-                task.setId(Integer.parseInt(input[0]));
-                return task;
-            case ("IN_PROGRESS"):
-                 task = new Task(input[3], input[4], Status.IN_PROGRESS);
-                task.setId(Integer.parseInt(input[0]));
-                return task;
-            default:
-                throw  new IllegalArgumentException();
-            }
+        Task task  = new Task(input[3], input[4], Status.valueOf(input[2]));
+        task.setId(Integer.valueOf(input[0]));
+        return task;
     }
 }
 

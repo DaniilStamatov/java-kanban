@@ -23,7 +23,7 @@ public class Managers {
     }
 
 
-    public static TaskManager loadFromFile(){
+    public static FileBackedTaskManager loadFromFile(){
         FileBackedTaskManager manager = getDefaultFileBackedTaskManager();
         manager.loadFromFile();
         return manager;

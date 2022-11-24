@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class Epic  extends Task {
-    ArrayList<Integer> subTasksIds;
+    private ArrayList<Integer> subTasksIds;
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,21 +54,8 @@ public class Epic  extends Task {
     }
     public static Epic fromString(String inputString){
         String [] input = inputString.split(",");
-        switch (input[2]){
-            case ("NEW"):
-                Epic epic = new Epic(input[3], input[4], Status.NEW);
-                epic.setId(Integer.parseInt(input[0]));
-                return epic ;
-            case ("DONE"):
-                 epic = new Epic(input[3], input[4], Status.DONE);
-                epic.setId(Integer.parseInt(input[0]));
-                return epic ;
-            case ("IN_PROGRESS"):
-                 epic = new Epic(input[3], input[4], Status.IN_PROGRESS);
-                epic.setId(Integer.parseInt(input[0]));
-                return epic ;
-            default:
-                throw  new IllegalArgumentException();
-        }
+        Epic epic = new Epic(input[3], input[4], Status.valueOf(input[2]));
+        epic.setId(Integer.valueOf(input[0]));
+        return epic;
     }
 }

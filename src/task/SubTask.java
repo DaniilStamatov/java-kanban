@@ -42,21 +42,8 @@ public class SubTask extends Task {
 
     public static SubTask fromString(String inputString){
         String[] input = inputString.split(",");
-        switch (input[2]){
-            case ("NEW"):
-                SubTask subTask =  new SubTask(input[3], input[4], Status.NEW, Integer.parseInt(input[5]));
-                subTask.setId(Integer.parseInt(input[0]));
-                return subTask;
-            case ("DONE"):
-                subTask =  new SubTask(input[3], input[4], Status.DONE, Integer.parseInt(input[5]));
-                subTask.setId(Integer.parseInt(input[0]));
-                return subTask;
-            case ("IN_PROGRESS"):
-                subTask =  new SubTask(input[3], input[4], Status.IN_PROGRESS, Integer.parseInt(input[5]));
-                subTask.setId(Integer.parseInt(input[0]));
-                return subTask;
-            default:
-                throw  new IllegalArgumentException();
-        }
+        SubTask subTask = new SubTask(input[3], input[4], Status.valueOf(input[2]), Integer.parseInt(input[5]));
+        subTask.setId(Integer.valueOf(input[0]));
+        return subTask;
     }
 }
